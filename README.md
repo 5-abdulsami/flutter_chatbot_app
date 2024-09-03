@@ -1,6 +1,6 @@
 # flutter_chatbot_app
 
-A new Flutter project.
+A Flutter Chatbot App leveraging Gemini API.
 
 ## Getting Started
 
