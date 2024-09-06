@@ -13,6 +13,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatProvider extends ChangeNotifier {
   List<Message> _inChatMessages = [];
@@ -104,14 +105,14 @@ class ChatProvider extends ChangeNotifier {
   }
 
   // set current chatId
-  void setChatid({required String newChatId}) {
+  void setCurrentChatid({required String newChatId}) {
     _currentChatId = newChatId;
     notifyListeners();
   }
 
   // set loading
-  void setLoading({required bool newLoading}) {
-    _isLoading = newLoading;
+  void setLoading({required bool value}) {
+    _isLoading = value;
     notifyListeners();
   }
 
@@ -125,6 +126,101 @@ class ChatProvider extends ChangeNotifier {
   GenerativeModel get visionModel => _visionModel!;
   String get modelType => _modelType;
   bool get isLoading => _isLoading;
+
+  // send the message to gemini and get the stream response
+  Future<void> sendMessage(
+      {required String message, required bool isTextOnly}) async {
+    // set the model
+    await setModel(isTextOnly: isTextOnly);
+
+    // set loading
+    setLoading(value: true);
+
+    // get chatId
+    String chatId = getChatId();
+
+    // list of history messages
+    List<Content> history = [];
+
+    // get the chat history
+    history = await getHistory(chatId: chatId);
+
+    // get the imageUrls
+    List<String> imageUrls = await getImageUrls(isTextOnly: isTextOnly);
+
+    // user message
+    final userMessage = Message(
+        messageId: "",
+        chatId: chatId,
+        message: StringBuffer(message),
+        imageUrls: imageUrls,
+        timeStamp: DateTime.now(),
+        role: Role.user);
+
+    // add this message to the list of inChatMessages
+    _inChatMessages.add(userMessage);
+    notifyListeners();
+
+    // sending a new message to the chat
+    if (currentChatId.isEmpty) {
+      setCurrentChatid(newChatId: chatId);
+    }
+
+    // send message to the model and wait for the response
+    await sendMessageAndWaitForResponse(
+        message: message,
+        chatId: chatId,
+        isTextOnly: isTextOnly,
+        history: history,
+        imageUrls: imageUrls,
+        userMessage: userMessage);
+  }
+
+  Future<void> sendMessageAndWaitForResponse(
+      {required String message,
+      required String chatId,
+      required bool isTextOnly,
+      required List<String> imageUrls,
+      required Message userMessage,
+      required List<Content> history}) async {}
+
+  // get the imageUrls method
+  List<String> getImageUrls({required bool isTextOnly}) {
+    List<String> imageUrls = [];
+    if (!isTextOnly && imageFilesList.isNotEmpty) {
+      for (var image in imageFilesList) {
+        imageUrls.add(image.path);
+      }
+    }
+    return imageUrls;
+  }
+
+  // get history method
+  Future<List<Content>> getHistory({required String chatId}) async {
+    List<Content> history = [];
+    // get history only if the chatId is not empty
+    if (currentChatId.isNotEmpty) {
+      await setInChatMessages(chatId: chatId);
+
+      for (var message in inChatMessages) {
+        if (message.role == Role.user) {
+          history.add(Content.text(message.message.toString()));
+        } else {
+          history.add(Content.model({TextPart(message.message.toString())}));
+        }
+      }
+    }
+    return history;
+  }
+
+  // get chatId method
+  String getChatId() {
+    if (currentChatId.isEmpty) {
+      return const Uuid().v4();
+    } else {
+      return currentChatId;
+    }
+  }
 
   static initHive() async {
     final dir = await getApplicationDocumentsDirectory();
