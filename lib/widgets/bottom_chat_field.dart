@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_chatbot_app/provider/chat_provider.dart';
 
@@ -18,6 +19,20 @@ class _BottomChatFieldState extends State<BottomChatField> {
   void dispose() {
     textController.dispose();
     super.dispose();
+  }
+
+  Future<void> sendChatMessage(
+      {required String message,
+      required ChatProvider chatProvider,
+      required bool isTextOnly}) async {
+    try {
+      await chatProvider.sendMessage(message: message, isTextOnly: isTextOnly);
+    } catch (e) {
+      log("error : $e");
+    } finally {
+      textController.clear();
+      textFocusNode.unfocus();
+    }
   }
 
   @override
@@ -40,7 +55,14 @@ class _BottomChatFieldState extends State<BottomChatField> {
             focusNode: textFocusNode,
             controller: textController,
             textInputAction: TextInputAction.send,
-            onSubmitted: (value) {},
+            onSubmitted: (value) {
+              if (value.isNotEmpty) {
+                sendChatMessage(
+                    message: textController.text,
+                    chatProvider: widget.chatProvider,
+                    isTextOnly: true);
+              }
+            },
             decoration: InputDecoration.collapsed(
                 hintText: "Enter your prompt...",
                 border: OutlineInputBorder(
@@ -51,14 +73,20 @@ class _BottomChatFieldState extends State<BottomChatField> {
           GestureDetector(
             onTap: () {
               //send message
+              if (textController.text.isNotEmpty) {
+                sendChatMessage(
+                    message: textController.text,
+                    chatProvider: widget.chatProvider,
+                    isTextOnly: true);
+              }
             },
             child: Container(
                 decoration: BoxDecoration(
                   color: Colors.deepPurple,
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Icon(
                     Icons.arrow_upward,
                     color: Colors.white,

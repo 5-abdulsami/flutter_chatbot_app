@@ -1,5 +1,5 @@
 import 'dart:core';
-import 'dart:nativewrappers/_internal/vm/lib/developer.dart';
+import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
@@ -45,7 +45,7 @@ class ChatProvider extends ChangeNotifier {
 
     for (var message in messagesFromDb) {
       if (_inChatMessages.contains(message)) {
-        log("this message already exists");
+        print("this message already exists");
         continue;
       }
       _inChatMessages.add(message);
@@ -172,7 +172,6 @@ class ChatProvider extends ChangeNotifier {
         chatId: chatId,
         isTextOnly: isTextOnly,
         history: history,
-        imageUrls: imageUrls,
         userMessage: userMessage);
   }
 
@@ -180,9 +179,70 @@ class ChatProvider extends ChangeNotifier {
       {required String message,
       required String chatId,
       required bool isTextOnly,
-      required List<String> imageUrls,
       required Message userMessage,
-      required List<Content> history}) async {}
+      required List<Content> history}) async {
+    // start the chat session -- only send history if its text only
+    final chatSession = _model!.startChat(
+      history: history.isEmpty || !isTextOnly ? null : history,
+    );
+
+    // get content
+    final content = await getContent(message: message, isTextOnly: isTextOnly);
+
+    // AI assistant message
+    final assistantMessage = userMessage.copyWith(
+        messageId: "",
+        role: Role.assistant,
+        timeStamp: DateTime.now(),
+        message: StringBuffer());
+
+    // add this message in the list of inChatMessages
+    _inChatMessages.add(assistantMessage);
+    notifyListeners();
+
+    // wait for stream response
+    chatSession.sendMessageStream(content).asyncMap((event) => event).listen(
+        (event) {
+      _inChatMessages
+          .firstWhere((element) =>
+              element.messageId == assistantMessage.messageId &&
+              element.role == Role.assistant)
+          .message
+          .write(event.text);
+      notifyListeners();
+    }, onDone: () {
+      // save message to hive db
+
+      // set loading to false
+      setLoading(value: false);
+    }).onError((error, StackTrace) {
+      // set loading to false
+      setLoading(value: false);
+    });
+  }
+
+  // get content
+  Future<Content> getContent(
+      {required String message, required bool isTextOnly}) async {
+    if (isTextOnly) {
+      // generate text from text only input
+      return Content.text(message);
+    } else {
+      // generate image from text and image input
+      final imageFutures = _imageFilesList!
+          .map((imageFile) => imageFile.readAsBytes())
+          .toList(growable: false);
+      final imageBytes = await Future.wait(imageFutures);
+
+      final prompt = TextPart(message);
+
+      final imageParts = imageBytes
+          .map((bytes) => DataPart('image/jpg', Uint8List.fromList(bytes)))
+          .toList();
+
+      return Content.model([prompt, ...imageParts]);
+    }
+  }
 
   // get the imageUrls method
   List<String> getImageUrls({required bool isTextOnly}) {
