@@ -146,11 +146,14 @@ class ChatProvider extends ChangeNotifier {
     history = await getHistory(chatId: chatId);
 
     // get the imageUrls
-    List<String> imageUrls = await getImageUrls(isTextOnly: isTextOnly);
+    List<String> imageUrls = getImageUrls(isTextOnly: isTextOnly);
+
+    // user message id
+    final userMessageId = const Uuid().v4();
 
     // user message
     final userMessage = Message(
-        messageId: "",
+        messageId: userMessageId,
         chatId: chatId,
         message: StringBuffer(message),
         imageUrls: imageUrls,
@@ -189,9 +192,12 @@ class ChatProvider extends ChangeNotifier {
     // get content
     final content = await getContent(message: message, isTextOnly: isTextOnly);
 
+    // assistant message id
+    final assistantMessageId = const Uuid().v4();
+
     // AI assistant message
     final assistantMessage = userMessage.copyWith(
-        messageId: "",
+        messageId: assistantMessageId,
         role: Role.assistant,
         timeStamp: DateTime.now(),
         message: StringBuffer());
