@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chatbot_app/model/message_model.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 

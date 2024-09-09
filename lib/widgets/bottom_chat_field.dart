@@ -2,6 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_chatbot_app/provider/chat_provider.dart';
+import 'package:flutter_chatbot_app/utils/utils.dart';
+import 'package:flutter_chatbot_app/widgets/preview_images_widet.dart';
+import 'package:image_picker/image_picker.dart';
 
 class BottomChatField extends StatefulWidget {
   const BottomChatField({super.key, required this.chatProvider});
@@ -14,6 +17,7 @@ class BottomChatField extends StatefulWidget {
 class _BottomChatFieldState extends State<BottomChatField> {
   final textController = TextEditingController();
   final textFocusNode = FocusNode();
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void dispose() {
@@ -31,67 +35,102 @@ class _BottomChatFieldState extends State<BottomChatField> {
       log("error : $e");
     } finally {
       textController.clear();
+      chatProvider.setImageFilesList(imagesList: []);
       textFocusNode.unfocus();
+    }
+  }
+
+  // method to pick image
+  void pickImage() async {
+    try {
+      final pickedImages = await _picker.pickMultiImage(
+          maxHeight: 800, maxWidth: 800, imageQuality: 95);
+
+      widget.chatProvider.setImageFilesList(imagesList: pickedImages);
+    } catch (e) {
+      log("error : $e");
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    bool hasImages = widget.chatProvider.imageFilesList.isNotEmpty;
     return Container(
       decoration: BoxDecoration(
         color: Colors.grey.shade200,
         borderRadius: BorderRadius.circular(30),
         border: Border.all(color: Colors.grey.shade700),
       ),
-      child: Row(
+      child: Column(
         children: [
-          IconButton(
-              onPressed: () {
-                // pick image
-              },
-              icon: const Icon(Icons.image)),
-          Expanded(
-              child: TextField(
-            focusNode: textFocusNode,
-            controller: textController,
-            textInputAction: TextInputAction.send,
-            onSubmitted: (value) {
-              if (value.isNotEmpty) {
-                sendChatMessage(
-                    message: textController.text,
-                    chatProvider: widget.chatProvider,
-                    isTextOnly: true);
-              }
-            },
-            decoration: InputDecoration.collapsed(
-                hintText: "Enter your prompt...",
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(30),
-                )),
-          )),
-          GestureDetector(
-            onTap: () {
-              //send message
-              if (textController.text.isNotEmpty) {
-                sendChatMessage(
-                    message: textController.text,
-                    chatProvider: widget.chatProvider,
-                    isTextOnly: true);
-              }
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.deepPurple,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Icon(
-                    Icons.arrow_upward,
-                    color: Colors.white,
-                  ),
-                )),
+          if (hasImages) const PreviewImagesWidet(),
+          Row(
+            children: [
+              IconButton(
+                  onPressed: () {
+                    if (hasImages) {
+                      // show delete dialog
+                      showAnimatedDialog(
+                          context: context,
+                          title: 'Delete Images',
+                          content: 'Are you sure you want to delete images?',
+                          actionText: 'Delete',
+                          onActionPressed: (value) {
+                            if (value) {
+                              widget.chatProvider
+                                  .setImageFilesList(imagesList: []);
+                            }
+                          });
+                    } else {
+                      // pick image
+                      pickImage();
+                    }
+                  },
+                  icon: Icon(hasImages ? Icons.delete : Icons.image)),
+              Expanded(
+                  child: TextField(
+                focusNode: textFocusNode,
+                controller: textController,
+                textInputAction: TextInputAction.send,
+                onSubmitted: (value) {
+                  if (value.isNotEmpty) {
+                    sendChatMessage(
+                        message: textController.text,
+                        chatProvider: widget.chatProvider,
+                        isTextOnly: hasImages ? false : true);
+                  }
+                },
+                decoration: InputDecoration.collapsed(
+                    hintText: "Enter your prompt...",
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(30),
+                    )),
+              )),
+              GestureDetector(
+                onTap: () {
+                  //send message
+                  if (textController.text.isNotEmpty) {
+                    sendChatMessage(
+                        message: textController.text,
+                        chatProvider: widget.chatProvider,
+                        isTextOnly: true);
+                  }
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.deepPurple,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.arrow_upward,
+                        color: Colors.white,
+                      ),
+                    )),
+              ),
+            ],
           ),
         ],
       ),

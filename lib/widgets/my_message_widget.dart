@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chatbot_app/model/message_model.dart';
+import 'package:flutter_chatbot_app/widgets/preview_images_widet.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 class MyMessageWidget extends StatelessWidget {
@@ -20,9 +21,18 @@ class MyMessageWidget extends StatelessWidget {
         ),
         padding: const EdgeInsets.all(15),
         margin: const EdgeInsets.only(bottom: 8),
-        child: MarkdownBody(
-          data: message.message.toString(),
-          selectable: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (message.imageUrls.isNotEmpty)
+              PreviewImagesWidet(
+                message: message,
+              ),
+            MarkdownBody(
+              data: message.message.toString(),
+              selectable: true,
+            ),
+          ],
         ),
       ),
     );
