@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           elevation: 0,
           selectedItemColor: Colors.black,
-          items: [
+          items: const [
             BottomNavigationBarItem(
                 icon: Icon(Icons.history), label: 'Chat History'),
             BottomNavigationBarItem(icon: Icon(Icons.chat), label: 'Chat'),
