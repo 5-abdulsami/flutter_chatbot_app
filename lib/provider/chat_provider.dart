@@ -5,7 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_chatbot_app/api/api_service.dart';
 import 'package:flutter_chatbot_app/constants.dart';
+import 'package:flutter_chatbot_app/hive/boxes.dart';
 import 'package:flutter_chatbot_app/hive/chat_history.dart';
+import 'package:flutter_chatbot_app/hive/role.dart';
 import 'package:flutter_chatbot_app/hive/settings.dart';
 import 'package:flutter_chatbot_app/hive/user_model.dart';
 import 'package:flutter_chatbot_app/model/message_model.dart';
@@ -216,8 +218,12 @@ class ChatProvider extends ChangeNotifier {
           .message
           .write(event.text);
       notifyListeners();
-    }, onDone: () {
+    }, onDone: () async {
       // save message to hive db
+      await saveMessagesToDb(
+          chatId: chatId,
+          assistantMessage: assistantMessage,
+          userMessage: userMessage);
 
       // set loading to false
       setLoading(value: false);
@@ -225,6 +231,39 @@ class ChatProvider extends ChangeNotifier {
       // set loading to false
       setLoading(value: false);
     });
+  }
+
+  // save messages to hive db
+  Future<void> saveMessagesToDb(
+      {required String chatId,
+      required Message assistantMessage,
+      required Message userMessage}) async {
+    // open the messagesBox
+    final messagesBox =
+        await Hive.openBox("${Constants.chatMessagesBox}$chatId");
+
+    // save the user messages
+    await messagesBox.put(userMessage.messageId, userMessage.toMap());
+
+    // save the assistant messages
+    await messagesBox.put(assistantMessage.messageId, assistantMessage.toMap());
+
+    // save the chat history with same chatId
+
+    // if its already there, update it, if not, create a new one
+    final chatHistoryBox = Boxes.getChatHistory();
+
+    final chatHistory = ChatHistory(
+        chatId: chatId,
+        prompt: userMessage.message.toString(),
+        response: assistantMessage.message.toString(),
+        timeStamp: DateTime.now(),
+        imageUrls: userMessage.imageUrls);
+
+    await chatHistoryBox.put(chatId, chatHistory);
+
+    // close box
+    await messagesBox.close();
   }
 
   // get content
@@ -296,6 +335,7 @@ class ChatProvider extends ChangeNotifier {
 
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(ChatHistoryAdapter());
+      Hive.registerAdapter(RoleAdapter());
     }
     await Hive.openBox<ChatHistory>(Constants.chatHistoryBox);
 

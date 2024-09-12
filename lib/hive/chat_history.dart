@@ -14,14 +14,15 @@ class ChatHistory extends HiveObject {
   final String response;
 
   @HiveField(3)
-  final String userId;
+  final List<dynamic> imageUrls;
 
   @HiveField(4)
   final DateTime timeStamp;
 
-  @HiveField(5)
-  final String imageUrls;
-
-  ChatHistory(this.chatId, this.prompt, this.response, this.userId,
-      this.timeStamp, this.imageUrls);
+  ChatHistory(
+      {required this.chatId,
+      required this.prompt,
+      required this.response,
+      required this.timeStamp,
+      required this.imageUrls});
 }

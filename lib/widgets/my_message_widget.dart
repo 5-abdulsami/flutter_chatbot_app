@@ -17,12 +17,11 @@ class MyMessageWidget extends StatelessWidget {
             BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primaryContainer,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(18),
         ),
         padding: const EdgeInsets.all(15),
         margin: const EdgeInsets.only(bottom: 8),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (message.imageUrls.isNotEmpty)
               PreviewImagesWidet(

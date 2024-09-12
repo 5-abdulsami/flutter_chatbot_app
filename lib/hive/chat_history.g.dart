@@ -17,19 +17,18 @@ class ChatHistoryAdapter extends TypeAdapter<ChatHistory> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return ChatHistory(
-      fields[0] as String,
-      fields[1] as String,
-      fields[2] as String,
-      fields[3] as String,
-      fields[4] as DateTime,
-      fields[5] as String,
+      chatId: fields[0] as String,
+      prompt: fields[1] as String,
+      response: fields[2] as String,
+      timeStamp: fields[4] as DateTime,
+      imageUrls: (fields[3] as List).cast<dynamic>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, ChatHistory obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.chatId)
       ..writeByte(1)
@@ -37,11 +36,9 @@ class ChatHistoryAdapter extends TypeAdapter<ChatHistory> {
       ..writeByte(2)
       ..write(obj.response)
       ..writeByte(3)
-      ..write(obj.userId)
+      ..write(obj.imageUrls)
       ..writeByte(4)
-      ..write(obj.timeStamp)
-      ..writeByte(5)
-      ..write(obj.imageUrls);
+      ..write(obj.timeStamp);
   }
 
   @override

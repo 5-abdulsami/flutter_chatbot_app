@@ -1,3 +1,5 @@
+import 'package:flutter_chatbot_app/hive/role.dart';
+
 class Message {
   String messageId;
   String chatId;
@@ -64,5 +66,3 @@ class Message {
     return messageId.hashCode;
   }
 }
-
-enum Role { user, assistant }

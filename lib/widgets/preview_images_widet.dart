@@ -26,7 +26,7 @@ class PreviewImagesWidet extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: EdgeInsets.fromLTRB(4, 8, 4, 0),
+                  padding: const EdgeInsets.fromLTRB(4, 8, 4, 0),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.file(

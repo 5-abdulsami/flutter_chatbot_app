@@ -92,14 +92,16 @@ class _BottomChatFieldState extends State<BottomChatField> {
                 focusNode: textFocusNode,
                 controller: textController,
                 textInputAction: TextInputAction.send,
-                onSubmitted: (value) {
-                  if (value.isNotEmpty) {
-                    sendChatMessage(
-                        message: textController.text,
-                        chatProvider: widget.chatProvider,
-                        isTextOnly: hasImages ? false : true);
-                  }
-                },
+                onSubmitted: widget.chatProvider.isLoading
+                    ? null
+                    : (value) {
+                        if (value.isNotEmpty) {
+                          sendChatMessage(
+                              message: textController.text,
+                              chatProvider: widget.chatProvider,
+                              isTextOnly: hasImages ? false : true);
+                        }
+                      },
                 decoration: InputDecoration.collapsed(
                     hintText: "Enter your prompt...",
                     border: OutlineInputBorder(
@@ -108,16 +110,19 @@ class _BottomChatFieldState extends State<BottomChatField> {
                     )),
               )),
               GestureDetector(
-                onTap: () {
-                  //send message
-                  if (textController.text.isNotEmpty) {
-                    sendChatMessage(
-                        message: textController.text,
-                        chatProvider: widget.chatProvider,
-                        isTextOnly: true);
-                  }
-                },
+                onTap: widget.chatProvider.isLoading
+                    ? null
+                    : () {
+                        //send message
+                        if (textController.text.isNotEmpty) {
+                          sendChatMessage(
+                              message: textController.text,
+                              chatProvider: widget.chatProvider,
+                              isTextOnly: true);
+                        }
+                      },
                 child: Container(
+                    margin: const EdgeInsets.only(right: 4),
                     decoration: BoxDecoration(
                       color: Colors.deepPurple,
                       borderRadius: BorderRadius.circular(30),

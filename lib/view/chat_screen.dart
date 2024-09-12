@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chatbot_app/model/message_model.dart';
+import 'package:flutter_chatbot_app/hive/role.dart';
 import 'package:flutter_chatbot_app/provider/chat_provider.dart';
 import 'package:flutter_chatbot_app/widgets/assistant_message_widget.dart';
 import 'package:flutter_chatbot_app/widgets/bottom_chat_field.dart';
@@ -18,7 +18,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _scrollController.dispose();
   }
