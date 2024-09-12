@@ -45,3 +45,9 @@ void showAnimatedDialog(
         );
       });
 }
+
+void showSnackBar(BuildContext context, String displayText) {
+  SnackBar(
+    content: Text(displayText),
+  );
+}
