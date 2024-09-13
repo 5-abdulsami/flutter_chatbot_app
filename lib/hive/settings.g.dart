@@ -17,8 +17,8 @@ class SettingsAdapter extends TypeAdapter<Settings> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Settings(
-      fields[0] as bool,
-      fields[1] as bool,
+      isDarkTheme: fields[0] as bool,
+      shouldSpeak: fields[1] as bool,
     );
   }
 

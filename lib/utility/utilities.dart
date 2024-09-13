@@ -1,24 +1,24 @@
 // animated dialog
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void showAnimatedDialog(
-    {required BuildContext context,
-    required String title,
-    required String content,
-    required String actionText,
-    required Function(bool) onActionPressed}) async {
+void showMyAnimatedDialog({
+  required BuildContext context,
+  required String title,
+  required String content,
+  required String actionText,
+  required Function(bool) onActionPressed,
+}) async {
   showGeneralDialog(
       context: context,
       barrierDismissible: true,
-      barrierLabel: "",
+      barrierLabel: '',
       transitionDuration: const Duration(milliseconds: 200),
-      pageBuilder: (context, animation, secodaryAnimation) {
+      pageBuilder: (context, animation, seconderyAnimation) {
         return Container();
       },
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
+      transitionBuilder: (context, animation, seconderyAnimation, child) {
         return ScaleTransition(
-          scale: Tween<double>(begin: 0.5, end: 1).animate(animation),
+          scale: Tween<double>(begin: 0.5, end: 1.0).animate(animation),
           child: FadeTransition(
             opacity: animation,
             child: AlertDialog(
@@ -26,10 +26,14 @@ void showAnimatedDialog(
                 title,
                 textAlign: TextAlign.center,
               ),
-              content: Text(content),
+              content: Text(
+                content,
+                textAlign: TextAlign.center,
+              ),
               actions: [
                 TextButton(
                     onPressed: () {
+                      onActionPressed(false);
                       Navigator.of(context).pop();
                     },
                     child: const Text('Cancel')),
@@ -44,10 +48,4 @@ void showAnimatedDialog(
           ),
         );
       });
-}
-
-void showSnackBar(BuildContext context, String displayText) {
-  SnackBar(
-    content: Text(displayText),
-  );
 }

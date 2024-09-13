@@ -1,4 +1,5 @@
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
 part 'user_model.g.dart';
 
 @HiveType(typeId: 1)
@@ -12,5 +13,10 @@ class UserModel extends HiveObject {
   @HiveField(2)
   final String image;
 
-  UserModel(this.uid, this.name, this.image);
+  // constructor
+  UserModel({
+    required this.uid,
+    required this.name,
+    required this.image,
+  });
 }
