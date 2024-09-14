@@ -41,7 +41,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
     required bool isTextOnly,
   }) async {
     try {
-      await chatProvider.sentMessage(
+      await chatProvider.sendMessage(
         message: message,
         isTextOnly: isTextOnly,
       );

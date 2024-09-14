@@ -230,7 +230,7 @@ class ChatProvider extends ChangeNotifier {
   }
 
   // send message to gemini and get the streamed reposnse
-  Future<void> sentMessage({
+  Future<void> sendMessage({
     required String message,
     required bool isTextOnly,
   }) async {
