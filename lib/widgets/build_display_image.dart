@@ -48,7 +48,7 @@ class BuildDisplayImage extends StatelessWidget {
     } else if (userImage.isNotEmpty) {
       return FileImage(File(userImage)) as ImageProvider<Object>;
     } else {
-      return const AssetImage(AssetsMenager.userIcon);
+      return const AssetImage(AssetsManager.userIcon);
     }
   }
 }

@@ -128,7 +128,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
                           }
                         },
                   decoration: InputDecoration.collapsed(
-                      hintText: 'Enter  a promt...',
+                      hintText: 'Ask me anything...',
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(30),

@@ -21,13 +21,13 @@ class ChatProvider extends ChangeNotifier {
   final List<Message> _inChatMessages = [];
 
   // page controller
-  final PageController _pageController = PageController();
+  final PageController _pageController = PageController(initialPage: 1);
 
   // images file list
   List<XFile>? _imagesFileList = [];
 
   // index of the current screen
-  int _currentIndex = 0;
+  int _currentIndex = 1;
 
   // cuttent chatId
   String _currentChatId = '';

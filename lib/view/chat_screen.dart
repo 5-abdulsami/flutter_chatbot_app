@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chatbot_app/provider/chat_provider.dart';
+import 'package:flutter_chatbot_app/utility/asset_manager.dart';
 import 'package:flutter_chatbot_app/utility/utilities.dart';
 import 'package:flutter_chatbot_app/widgets/bottom_chat_field.dart';
 import 'package:flutter_chatbot_app/widgets/chat_messages.dart';
@@ -91,7 +92,16 @@ class _ChatScreenState extends State<ChatScreen> {
                   Expanded(
                     child: chatProvider.inChatMessages.isEmpty
                         ? const Center(
-                            child: Text('No messages yet'),
+                            child: Column(
+                              children: [
+                                Image(
+                                  image: AssetImage(AssetsManager.appIcon),
+                                  width: 250,
+                                  height: 250,
+                                ),
+                                Text('No messages yet'),
+                              ],
+                            ),
                           )
                         : ChatMessages(
                             scrollController: _scrollController,
