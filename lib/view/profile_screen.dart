@@ -6,6 +6,7 @@ import 'package:flutter_chatbot_app/hive/settings.dart';
 import 'package:flutter_chatbot_app/provider/settings_provider.dart';
 import 'package:flutter_chatbot_app/widgets/build_display_image.dart';
 import 'package:flutter_chatbot_app/widgets/settings_tile.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   File? file;
   String userImage = '';
-  String userName = 'Dexter';
+  String userName = 'Sami';
   final ImagePicker _picker = ImagePicker();
 
   // pick an image
@@ -69,7 +70,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Profile'),
+          title: Text(
+            'Profile',
+            style: GoogleFonts.poppins(),
+          ),
           centerTitle: true,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           actions: [
@@ -102,7 +106,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(height: 20.0),
 
                 // user name
-                Text(userName, style: Theme.of(context).textTheme.titleLarge),
+                Text(userName, style: GoogleFonts.poppins(fontSize: 30)),
 
                 const SizedBox(height: 40.0),
 

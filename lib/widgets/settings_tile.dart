@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SettingsTile extends StatelessWidget {
   const SettingsTile({
@@ -30,7 +31,10 @@ class SettingsTile extends StatelessWidget {
                 color: Colors.white,
               ),
             )),
-        title: Text(title),
+        title: Text(
+          title,
+          style: GoogleFonts.poppins(),
+        ),
         trailing: Switch(
           value: value,
           onChanged: onChanged,

@@ -3,6 +3,7 @@ import 'package:flutter_chatbot_app/hive/boxes.dart';
 import 'package:flutter_chatbot_app/hive/chat_history.dart';
 import 'package:flutter_chatbot_app/widgets/chat_history_widget.dart';
 import 'package:flutter_chatbot_app/widgets/empty_history_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class ChatHistoryScreen extends StatefulWidget {
@@ -19,7 +20,10 @@ class _ChatHistoryScreenState extends State<ChatHistoryScreen> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           centerTitle: true,
-          title: const Text('Chat history'),
+          title: Text(
+            'Chat history',
+            style: GoogleFonts.poppins(),
+          ),
         ),
         body: ValueListenableBuilder<Box<ChatHistory>>(
           valueListenable: Boxes.getChatHistory().listenable(),

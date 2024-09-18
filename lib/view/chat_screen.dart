@@ -4,6 +4,7 @@ import 'package:flutter_chatbot_app/utility/asset_manager.dart';
 import 'package:flutter_chatbot_app/utility/utilities.dart';
 import 'package:flutter_chatbot_app/widgets/bottom_chat_field.dart';
 import 'package:flutter_chatbot_app/widgets/chat_messages.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -55,7 +56,10 @@ class _ChatScreenState extends State<ChatScreen> {
           appBar: AppBar(
             backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
             centerTitle: true,
-            title: const Text('Chat with Gemini'),
+            title: Text(
+              'Chat with Gemini',
+              style: GoogleFonts.poppins(),
+            ),
             actions: [
               if (chatProvider.inChatMessages.isNotEmpty)
                 Padding(
@@ -91,15 +95,25 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: [
                   Expanded(
                     child: chatProvider.inChatMessages.isEmpty
-                        ? const Center(
+                        ? Center(
                             child: Column(
                               children: [
-                                Image(
-                                  image: AssetImage(AssetsManager.appIcon),
-                                  width: 250,
-                                  height: 250,
+                                Opacity(
+                                  opacity: 0.5,
+                                  child: Image(
+                                    image:
+                                        const AssetImage(AssetsManager.appIcon),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.55,
+                                    height: MediaQuery.of(context).size.width *
+                                        0.55,
+                                  ),
                                 ),
-                                Text('No messages yet'),
+                                Text(
+                                  'Start a chat...',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 20, color: Colors.grey),
+                                ),
                               ],
                             ),
                           )
