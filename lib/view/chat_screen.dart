@@ -119,18 +119,14 @@ class _ChatScreenState extends State<ChatScreen> {
                               child: SingleChildScrollView(
                                 child: Column(
                                   children: [
-                                    Opacity(
-                                      opacity: 0.5,
-                                      child: Image(
-                                        image: const AssetImage(
-                                            AssetsManager.appIcon),
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.55,
-                                        height:
-                                            MediaQuery.of(context).size.width *
-                                                0.55,
-                                      ),
+                                    Image(
+                                      image: const AssetImage(
+                                          AssetsManager.appIcon),
+                                      width: MediaQuery.of(context).size.width *
+                                          0.55,
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              0.55,
                                     ),
                                     Text(
                                       'Start a chat...',

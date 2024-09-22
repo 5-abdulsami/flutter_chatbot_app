@@ -115,6 +115,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: const Icon(Icons.check),
               onPressed: () {
                 // save data
+                saveUserData();
+                print("user data saved");
               },
             ),
           ],
