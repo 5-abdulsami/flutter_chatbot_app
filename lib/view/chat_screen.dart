@@ -37,6 +37,10 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  void _closeKeyboard() {
+    FocusScope.of(context).unfocus();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ChatProvider>(
@@ -52,89 +56,108 @@ class _ChatScreenState extends State<ChatScreen> {
           }
         });
 
-        return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-            centerTitle: true,
-            title: Text(
-              'Chat with Gemini',
-              style: GoogleFonts.poppins(),
-            ),
-            actions: [
-              if (chatProvider.inChatMessages.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CircleAvatar(
-                    child: IconButton(
-                      icon: const Icon(Icons.add),
-                      onPressed: () async {
-                        // show my animated dialog to start new chat
-                        showMyAnimatedDialog(
-                          context: context,
-                          title: 'Start New Chat',
-                          content: 'Are you sure you want to start a new chat?',
-                          actionText: 'Yes',
-                          onActionPressed: (value) async {
-                            if (value) {
-                              // prepare chat room
-                              await chatProvider.prepareChatRoom(
-                                  isNewChat: true, chatID: '');
-                            }
-                          },
-                        );
-                      },
+        return GestureDetector(
+          onTap: () {
+            _closeKeyboard();
+          },
+          onHorizontalDragStart: (details) {
+            // right swipe
+            if (details.globalPosition.dx > 0) {
+              _closeKeyboard();
+            } else if (details.globalPosition.dx < 0) {
+              _closeKeyboard();
+            }
+          },
+          onHorizontalDragEnd: (details) {
+            _closeKeyboard();
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+              centerTitle: true,
+              title: Text(
+                'Chat with Gemini',
+                style: GoogleFonts.poppins(),
+              ),
+              actions: [
+                if (chatProvider.inChatMessages.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircleAvatar(
+                      child: IconButton(
+                        icon: const Icon(Icons.add),
+                        onPressed: () async {
+                          // show my animated dialog to start new chat
+                          showMyAnimatedDialog(
+                            context: context,
+                            title: 'Start New Chat',
+                            content:
+                                'Are you sure you want to start a new chat?',
+                            actionText: 'Yes',
+                            onActionPressed: (value) async {
+                              if (value) {
+                                // prepare chat room
+                                await chatProvider.prepareChatRoom(
+                                    isNewChat: true, chatID: '');
+                              }
+                            },
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                )
-            ],
-          ),
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Expanded(
-                    child: chatProvider.inChatMessages.isEmpty
-                        ? Center(
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  Opacity(
-                                    opacity: 0.5,
-                                    child: Image(
-                                      image: const AssetImage(
-                                          AssetsManager.appIcon),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.55,
+                  )
+              ],
+            ),
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: chatProvider.inChatMessages.isEmpty
+                          ? Center(
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    Opacity(
+                                      opacity: 0.5,
+                                      child: Image(
+                                        image: const AssetImage(
+                                            AssetsManager.appIcon),
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.55,
+                                        height:
+                                            MediaQuery.of(context).size.width *
+                                                0.55,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Start a chat...',
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 20, color: Colors.grey),
+                                    ),
+                                    SizedBox(
                                       height:
                                           MediaQuery.of(context).size.width *
-                                              0.55,
-                                    ),
-                                  ),
-                                  Text(
-                                    'Start a chat...',
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 20, color: Colors.grey),
-                                  ),
-                                  SizedBox(
-                                    height:
-                                        MediaQuery.of(context).size.width * 0.1,
-                                  )
-                                ],
+                                              0.1,
+                                    )
+                                  ],
+                                ),
                               ),
+                            )
+                          : ChatMessages(
+                              scrollController: _scrollController,
+                              chatProvider: chatProvider,
                             ),
-                          )
-                        : ChatMessages(
-                            scrollController: _scrollController,
-                            chatProvider: chatProvider,
-                          ),
-                  ),
+                    ),
 
-                  // input field
-                  BottomChatField(
-                    chatProvider: chatProvider,
-                  )
-                ],
+                    // input field
+                    BottomChatField(
+                      chatProvider: chatProvider,
+                    )
+                  ],
+                ),
               ),
             ),
           ),
