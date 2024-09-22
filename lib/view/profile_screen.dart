@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_chatbot_app/hive/boxes.dart';
 import 'package:flutter_chatbot_app/hive/settings.dart';
+import 'package:flutter_chatbot_app/hive/user_model.dart';
 import 'package:flutter_chatbot_app/provider/settings_provider.dart';
 import 'package:flutter_chatbot_app/widgets/build_display_image.dart';
 import 'package:flutter_chatbot_app/widgets/settings_tile.dart';
@@ -10,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -19,10 +21,15 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  File? file;
+  File? imageFile;
   String userImage = '';
   String userName = 'Sami';
   final ImagePicker _picker = ImagePicker();
+
+  String generateUniqueId() {
+    const uuid = Uuid();
+    return uuid.v4();
+  }
 
   // pick an image
   void pickImage() async {
@@ -35,7 +42,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
       if (pickedImage != null) {
         setState(() {
-          file = File(pickedImage.path);
+          imageFile = File(pickedImage.path);
         });
       }
     } catch (e) {
@@ -45,19 +52,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   // get user data
   void getUserData() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // get user data fro box
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // get user data from box
       final userBox = Boxes.getUser();
 
-      // check is user data is not empty
+      // check if user data is not empty
       if (userBox.isNotEmpty) {
-        final user = userBox.getAt(0);
+        final user = userBox.getAt(0) as UserModel;
         setState(() {
-          userImage = user!.name;
-          userName = user.image;
+          if (imageFile != null) {
+            userImage = imageFile!.path;
+          } else {
+            userImage = user.image;
+          }
+          userName = user.name;
         });
       }
     });
+  }
+
+  void saveUserData() async {
+    final userBox = Boxes.getUser();
+
+    // Check if image was picked
+    if (imageFile != null) {
+      // Get the absolute path of the image file
+      final imagePath = imageFile!.path;
+
+      // Update user image in the UserModel
+      final user =
+          UserModel(uid: generateUniqueId(), name: userName, image: imagePath);
+
+      // Clear the existing user data before saving (if any)
+      userBox.clear();
+
+      // Add the updated user data to the box
+      await userBox.add(user);
+    } else {
+      // Handle case where no image is picked
+      print('No image picked to save.');
+    }
   }
 
   @override
@@ -95,7 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: [
                 Center(
                   child: BuildDisplayImage(
-                      file: file,
+                      file: imageFile,
                       userImage: userImage,
                       onPressed: () {
                         // open camera or gallery

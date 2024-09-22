@@ -10,5 +10,9 @@ class Settings extends HiveObject {
   @HiveField(1)
   bool shouldSpeak = false;
 
-  Settings({required this.isDarkTheme, required this.shouldSpeak});
+  // constructor
+  Settings({
+    required this.isDarkTheme,
+    required this.shouldSpeak,
+  });
 }
