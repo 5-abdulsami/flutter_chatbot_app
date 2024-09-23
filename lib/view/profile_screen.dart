@@ -150,72 +150,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     valueListenable: Boxes.getSettings().listenable(),
                     builder: (context, box, child) {
                       if (box.isEmpty) {
-                        return Column(
-                          children: [
-                            // ai voice
-                            SettingsTile(
-                                icon: Icons.mic,
-                                title: 'Enable AI voice',
-                                value: false,
-                                onChanged: (value) {
-                                  final settingProvider =
-                                      context.read<SettingsProvider>();
-                                  settingProvider.toggleSpeak(
-                                    value: value,
-                                  );
-                                }),
-
-                            const SizedBox(height: 10.0),
-
-                            // theme
-                            SettingsTile(
-                                icon: Icons.light_mode,
-                                title: 'Theme',
-                                value: false,
-                                onChanged: (value) {
-                                  final settingProvider =
-                                      context.read<SettingsProvider>();
-                                  settingProvider.toggleDarkMode(
-                                    value: value,
-                                  );
-                                }),
-                          ],
-                        );
+                        return SettingsTile(
+                            icon: Icons.light_mode,
+                            title: 'Theme',
+                            value: false,
+                            onChanged: (value) {
+                              final settingProvider =
+                                  context.read<SettingsProvider>();
+                              settingProvider.toggleDarkMode(
+                                value: value,
+                              );
+                            });
                       } else {
-                        final settings = box.getAt(0);
-                        return Column(
-                          children: [
-                            // ai voice
-                            SettingsTile(
-                                icon: Icons.mic,
-                                title: 'Enable AI voice',
-                                value: settings!.shouldSpeak,
-                                onChanged: (value) {
-                                  final settingProvider =
-                                      context.read<SettingsProvider>();
-                                  settingProvider.toggleSpeak(
-                                    value: value,
-                                  );
-                                }),
-
-                            const SizedBox(height: 10.0),
-
-                            // theme
-                            SettingsTile(
-                                icon: settings.isDarkTheme
-                                    ? Icons.dark_mode
-                                    : Icons.light_mode,
-                                title: 'Theme',
-                                value: settings.isDarkTheme,
-                                onChanged: (value) {
-                                  final settingProvider =
-                                      context.read<SettingsProvider>();
-                                  settingProvider.toggleDarkMode(
-                                    value: value,
-                                  );
-                                }),
-                          ],
-                        );
+                        final settings = box.getAt(0)!;
+                        return SettingsTile(
+                            icon: settings.isDarkTheme
+                                ? Icons.dark_mode
+                                : Icons.light_mode,
+                            title: 'Theme',
+                            value: settings.isDarkTheme,
+                            onChanged: (value) {
+                              final settingProvider =
+                                  context.read<SettingsProvider>();
+                              settingProvider.toggleDarkMode(
+                                value: value,
+                              );
+                            });
                       }
                     })
               ],
