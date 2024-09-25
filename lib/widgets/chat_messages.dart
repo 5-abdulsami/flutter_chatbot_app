@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chatbot_app/model/message.dart';
-import 'package:flutter_chatbot_app/provider/chat_provider.dart';
-import 'package:flutter_chatbot_app/widgets/assistant_message_widget.dart';
+import 'package:BotPal/model/message.dart';
+import 'package:BotPal/provider/chat_provider.dart';
+import 'package:BotPal/widgets/assistant_message_widget.dart';
 
 import 'my_message_widget.dart';
 

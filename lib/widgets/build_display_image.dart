@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_chatbot_app/utility/asset_manager.dart';
+import 'package:BotPal/utility/asset_manager.dart';
 
 class BuildDisplayImage extends StatelessWidget {
   const BuildDisplayImage({

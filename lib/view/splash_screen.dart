@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_chatbot_app/utility/asset_manager.dart';
-import 'package:flutter_chatbot_app/view/home_screen.dart';
+import 'package:BotPal/utility/asset_manager.dart';
+import 'package:BotPal/view/home_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -59,10 +60,20 @@ class _SplashScreenState extends State<SplashScreen>
               scale: _sizeAnimation.value,
               child: Opacity(
                 opacity: _opacityAnimation.value,
-                child: const Image(
-                  image: AssetImage(AssetsManager.appIcon),
-                  width: 300,
-                  height: 300,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Image(
+                      image: AssetImage(AssetsManager.appIcon),
+                      width: 300,
+                      height: 300,
+                    ),
+                    Text(
+                      "BOTPAL",
+                      style:
+                          GoogleFonts.poppins(fontSize: 40, letterSpacing: 2),
+                    )
+                  ],
                 ),
               ),
             );

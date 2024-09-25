@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chatbot_app/hive/boxes.dart';
-import 'package:flutter_chatbot_app/hive/chat_history.dart';
-import 'package:flutter_chatbot_app/widgets/chat_history_widget.dart';
-import 'package:flutter_chatbot_app/widgets/empty_history_widget.dart';
+import 'package:BotPal/hive/boxes.dart';
+import 'package:BotPal/hive/chat_history.dart';
+import 'package:BotPal/widgets/chat_history_widget.dart';
+import 'package:BotPal/widgets/empty_history_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 

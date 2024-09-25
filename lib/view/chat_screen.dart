@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chatbot_app/provider/chat_provider.dart';
-import 'package:flutter_chatbot_app/utility/asset_manager.dart';
-import 'package:flutter_chatbot_app/utility/utilities.dart';
-import 'package:flutter_chatbot_app/widgets/bottom_chat_field.dart';
-import 'package:flutter_chatbot_app/widgets/chat_messages.dart';
+import 'package:BotPal/provider/chat_provider.dart';
+import 'package:BotPal/utility/asset_manager.dart';
+import 'package:BotPal/utility/utilities.dart';
+import 'package:BotPal/widgets/bottom_chat_field.dart';
+import 'package:BotPal/widgets/chat_messages.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -76,7 +76,7 @@ class _ChatScreenState extends State<ChatScreen> {
               backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
               centerTitle: true,
               title: Text(
-                'Chat with Gemini',
+                'Chat with BotPal',
                 style: GoogleFonts.poppins(),
               ),
               actions: [

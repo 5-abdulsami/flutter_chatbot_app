@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chatbot_app/hive/chat_history.dart';
-import 'package:flutter_chatbot_app/provider/chat_provider.dart';
-import 'package:flutter_chatbot_app/utility/utilities.dart';
+import 'package:BotPal/hive/chat_history.dart';
+import 'package:BotPal/provider/chat_provider.dart';
+import 'package:BotPal/utility/utilities.dart';
 import 'package:provider/provider.dart';
 
 class ChatHistoryWidget extends StatelessWidget {

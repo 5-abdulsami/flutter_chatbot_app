@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chatbot_app/hive/boxes.dart';
-import 'package:flutter_chatbot_app/hive/settings.dart';
+import 'package:BotPal/hive/boxes.dart';
+import 'package:BotPal/hive/settings.dart';
 
 class SettingsProvider extends ChangeNotifier {
   bool _isDarkMode = false;

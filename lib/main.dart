@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chatbot_app/provider/chat_provider.dart';
-import 'package:flutter_chatbot_app/provider/settings_provider.dart';
-import 'package:flutter_chatbot_app/themes/my_theme.dart';
-import 'package:flutter_chatbot_app/view/splash_screen.dart';
+import 'package:BotPal/provider/chat_provider.dart';
+import 'package:BotPal/provider/settings_provider.dart';
+import 'package:BotPal/themes/my_theme.dart';
+import 'package:BotPal/view/splash_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

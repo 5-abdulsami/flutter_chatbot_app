@@ -1,7 +1,7 @@
-import 'package:flutter_chatbot_app/constants.dart';
-import 'package:flutter_chatbot_app/hive/chat_history.dart';
-import 'package:flutter_chatbot_app/hive/settings.dart';
-import 'package:flutter_chatbot_app/hive/user_model.dart';
+import 'package:BotPal/constants.dart';
+import 'package:BotPal/hive/chat_history.dart';
+import 'package:BotPal/hive/settings.dart';
+import 'package:BotPal/hive/user_model.dart';
 import 'package:hive/hive.dart';
 
 class Boxes {

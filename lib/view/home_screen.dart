@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chatbot_app/provider/chat_provider.dart';
-import 'package:flutter_chatbot_app/view/chat_history_screen.dart';
-import 'package:flutter_chatbot_app/view/chat_screen.dart';
-import 'package:flutter_chatbot_app/view/profile_screen.dart';
+import 'package:BotPal/provider/chat_provider.dart';
+import 'package:BotPal/view/chat_history_screen.dart';
+import 'package:BotPal/view/chat_screen.dart';
+import 'package:BotPal/view/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
