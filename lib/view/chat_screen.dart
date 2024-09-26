@@ -123,10 +123,15 @@ class _ChatScreenState extends State<ChatScreen> {
                                       image: const AssetImage(
                                           AssetsManager.appIcon),
                                       width: MediaQuery.of(context).size.width *
-                                          0.55,
+                                          0.35,
                                       height:
                                           MediaQuery.of(context).size.width *
-                                              0.55,
+                                              0.35,
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              0.045,
                                     ),
                                     Text(
                                       'Start a chat...',

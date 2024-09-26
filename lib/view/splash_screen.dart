@@ -64,12 +64,15 @@ class _SplashScreenState extends State<SplashScreen>
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.25,
                     ),
                     const Image(
                       image: AssetImage(AssetsManager.appIcon),
-                      width: 300,
-                      height: 300,
+                      width: 200,
+                      height: 200,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.045,
                     ),
                     Text(
                       "BOTPAL",
