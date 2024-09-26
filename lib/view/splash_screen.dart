@@ -61,8 +61,11 @@ class _SplashScreenState extends State<SplashScreen>
               child: Opacity(
                 opacity: _opacityAnimation.value,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                    ),
                     const Image(
                       image: AssetImage(AssetsManager.appIcon),
                       width: 300,
