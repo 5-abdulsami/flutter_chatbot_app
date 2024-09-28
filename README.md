@@ -1,11 +1,15 @@
 # BotPal: AI-Powered Personal Chat Assistant
 
 
-| ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/splash.jpg) | ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/empty_chat.jpg) |
+| Splash Screen | Empty Chat Screen |
 | --- | --- |
-| ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/chats.jpg) | ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/image_chat.jpg) |
-| ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/profile.jpg) | ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/delete_chat.jpg) |
-| ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/chat_light.jpg) | ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/chat_history_light.jpg) |
+| <img src="https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/splash.jpg" width="200"/> | <img src="https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/empty_chat.jpg" width="200"/> |
+| Chats Screen | Image Chat Screen |
+| <img src="https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/chats.jpg" width="200"/> | <img src="https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/image_chat.jpg" width="200"/> |
+| Profile Screen | Delete Chat Screen |
+| <img src="https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/profile.jpg" width="200"/> | <img src="https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/delete_chat.jpg" width="200"/> |
+| Chat Light Mode | Chat History Light Mode |
+| <img src="https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/chat_light.jpg" width="200"/> | <img src="https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/chat_history_light.jpg" width="200"/> |
 
 
 ## Overview
