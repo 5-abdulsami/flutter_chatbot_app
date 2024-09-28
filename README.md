@@ -3,6 +3,7 @@
 | ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/splash.jpg) | ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/splash.jpg) |
 | --- | --- |
 | ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/splash.jpg) | ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/splash.jpg) |
+| --- | --- |
 | ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/splash.jpg) | ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/splash.jpg) |
 
 
