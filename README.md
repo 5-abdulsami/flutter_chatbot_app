@@ -2,6 +2,7 @@
 
 
 | Splash Screen | Empty Chat Screen |
+| --- | --- |
 | <img src="https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/splash.jpg" width="200"/> | <img src="https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/empty_chat.jpg" width="200"/> |
 | Chats Screen | Image Chat Screen |
 | <img src="https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/chats.jpg" width="200"/> | <img src="https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/image_chat.jpg" width="200"/> |
