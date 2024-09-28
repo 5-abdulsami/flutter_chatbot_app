@@ -1,5 +1,6 @@
 # BotPal: AI-Powered Personal Chat Assistant
 
+| Splash Screen | Empty Chat Screen |
 | ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/splash.jpg) | ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/empty_chat.jpg) |
 | --- | --- |
 | ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/chats.jpg) | ![Image](https://github.com/5-abdulsami/flutter_chatbot_app/raw/main/assets/app_screenshots/image_chat.jpg) |
