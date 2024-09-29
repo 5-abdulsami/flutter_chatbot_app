@@ -30,7 +30,7 @@ BotPal is an innovative, user-friendly chatbot app leveraging Gemini-Pro's multi
 - Utilizes Google Generative AI for advanced language understanding
 - Employs Hive for secure, local data storage
 
-### Packages Used
+### Important Packages Used
 
 - google_generative_ai
 - flutter_markdown
