@@ -56,7 +56,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
   }
 
   // pick an image
-  void pickImage() async {
+  void pickGalleryImage() async {
     try {
       final pickedImages = await _picker.pickMultiImage(
         maxHeight: 800,
@@ -64,6 +64,19 @@ class _BottomChatFieldState extends State<BottomChatField> {
         imageQuality: 95,
       );
       widget.chatProvider.setImagesFileList(listValue: pickedImages);
+    } catch (e) {
+      log('error : $e');
+    }
+  }
+
+  void pickCameraImage() async {
+    try {
+      final pickedImage = await _picker.pickImage(
+          source: ImageSource.camera,
+          maxHeight: 800,
+          maxWidth: 800,
+          imageQuality: 95);
+      widget.chatProvider.setImagesFileList(listValue: [pickedImage!]);
     } catch (e) {
       log('error : $e');
     }
@@ -86,6 +99,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
         children: [
           if (hasImages) const PreviewImagesWidget(),
           Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
                 onPressed: () {
@@ -103,38 +117,63 @@ class _BottomChatFieldState extends State<BottomChatField> {
                           }
                         });
                   } else {
-                    pickImage();
+                    pickCameraImage();
                   }
                 },
-                icon: Icon(hasImages ? Icons.delete_forever : Icons.image),
+                icon: Icon(hasImages ? Icons.delete_forever : Icons.camera),
               ),
-              const SizedBox(
-                width: 5,
-              ),
+              hasImages
+                  ? Container()
+                  : IconButton(
+                      onPressed: () {
+                        if (hasImages) {
+                          // show the delete dialog
+                          showMyAnimatedDialog(
+                              context: context,
+                              title: 'Delete Images',
+                              content:
+                                  'Are you sure you want to delete the images?',
+                              actionText: 'Delete',
+                              onActionPressed: (value) {
+                                if (value) {
+                                  widget.chatProvider
+                                      .setImagesFileList(listValue: []);
+                                }
+                              });
+                        } else {
+                          pickGalleryImage();
+                        }
+                      },
+                      icon: const Icon(Icons.image),
+                    ),
               Expanded(
-                child: TextField(
-                  focusNode: textFieldFocus,
-                  controller: textController,
-                  textInputAction: TextInputAction.send,
-                  onSubmitted: widget.chatProvider.isLoading
-                      ? null
-                      : (String value) {
-                          if (value.isNotEmpty) {
-                            // send the message
-                            sendChatMessage(
-                              message: textController.text,
-                              chatProvider: widget.chatProvider,
-                              isTextOnly: hasImages ? false : true,
-                            );
-                          }
-                        },
-                  decoration: InputDecoration.collapsed(
-                      hintText: 'Ask me anything...',
-                      hintStyle: GoogleFonts.poppins(),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(30),
-                      )),
+                child: SingleChildScrollView(
+                  reverse: true,
+                  child: TextField(
+                    maxLines: null,
+                    focusNode: textFieldFocus,
+                    controller: textController,
+                    textInputAction: TextInputAction.send,
+                    onSubmitted: widget.chatProvider.isLoading
+                        ? null
+                        : (String value) {
+                            if (value.isNotEmpty) {
+                              // send the message
+                              sendChatMessage(
+                                message: textController.text,
+                                chatProvider: widget.chatProvider,
+                                isTextOnly: hasImages ? false : true,
+                              );
+                            }
+                          },
+                    decoration: InputDecoration.collapsed(
+                        hintText: 'Ask me anything...',
+                        hintStyle: GoogleFonts.poppins(),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(30),
+                        )),
+                  ),
                 ),
               ),
               GestureDetector(
