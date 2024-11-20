@@ -147,33 +147,29 @@ class _BottomChatFieldState extends State<BottomChatField> {
                       icon: const Icon(Icons.image),
                     ),
               Expanded(
-                child: SingleChildScrollView(
-                  reverse: true,
-                  child: TextField(
-                    maxLines: null,
-                    focusNode: textFieldFocus,
-                    controller: textController,
-                    textInputAction: TextInputAction.send,
-                    onSubmitted: widget.chatProvider.isLoading
-                        ? null
-                        : (String value) {
-                            if (value.isNotEmpty) {
-                              // send the message
-                              sendChatMessage(
-                                message: textController.text,
-                                chatProvider: widget.chatProvider,
-                                isTextOnly: hasImages ? false : true,
-                              );
-                            }
-                          },
-                    decoration: InputDecoration.collapsed(
-                        hintText: 'Ask me anything...',
-                        hintStyle: GoogleFonts.poppins(),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(30),
-                        )),
-                  ),
+                child: TextField(
+                  focusNode: textFieldFocus,
+                  controller: textController,
+                  textInputAction: TextInputAction.send,
+                  onSubmitted: widget.chatProvider.isLoading
+                      ? null
+                      : (String value) {
+                          if (value.isNotEmpty) {
+                            // send the message
+                            sendChatMessage(
+                              message: textController.text,
+                              chatProvider: widget.chatProvider,
+                              isTextOnly: hasImages ? false : true,
+                            );
+                          }
+                        },
+                  decoration: InputDecoration.collapsed(
+                      hintText: 'Ask me anything...',
+                      hintStyle: GoogleFonts.poppins(),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(30),
+                      )),
                 ),
               ),
               GestureDetector(
