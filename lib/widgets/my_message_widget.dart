@@ -35,6 +35,9 @@ class MyMessageWidget extends StatelessWidget {
               MarkdownBody(
                 selectable: true,
                 data: message.message.toString(),
+                styleSheet: MarkdownStyleSheet(
+                  p: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                ),
               ),
             ],
           )),

@@ -47,6 +47,22 @@ class AssistantMessageWidget extends StatelessWidget {
                   child: MarkdownBody(
                     selectable: true,
                     data: message,
+                    styleSheet: MarkdownStyleSheet(
+                      p: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w400),
+                      h1: const TextStyle(
+                          fontSize: 28, fontWeight: FontWeight.w900),
+                      h2: const TextStyle(
+                          fontSize: 26, fontWeight: FontWeight.w800),
+                      h3: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.w700),
+                      h4: const TextStyle(
+                          fontSize: 22, fontWeight: FontWeight.w600),
+                      h5: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.w600),
+                      h6: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.w600),
+                    ),
                     onTapLink: (text, href, title) {
                       if (href != null) {
                         // Use the url_launcher package to open the link
