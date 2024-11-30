@@ -190,7 +190,7 @@ class ChatProvider extends ChangeNotifier {
       await Hive.box('${Constants.chatMessagesBox}$chatId').close();
     }
 
-    // get the current chatId, its its not empty
+    // get the current chatId, if its not empty
     // we check if its the same as the chatId
     // if its the same we set it to empty
     if (currentChatId.isNotEmpty) {

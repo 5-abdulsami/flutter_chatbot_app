@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AssistantMessageWidget extends StatelessWidget {
   const AssistantMessageWidget({
@@ -35,6 +36,12 @@ class AssistantMessageWidget extends StatelessWidget {
               : MarkdownBody(
                   selectable: true,
                   data: message,
+                  onTapLink: (text, href, title) {
+                    if (href != null) {
+                      // Use the url_launcher package to open the link
+                      launchUrl(Uri.parse(href));
+                    }
+                  },
                 )),
     );
   }
