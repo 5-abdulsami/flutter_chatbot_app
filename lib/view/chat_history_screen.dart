@@ -33,7 +33,8 @@ class _ChatHistoryScreenState extends State<ChatHistoryScreen> {
             return chatHistory.isEmpty
                 ? const EmptyHistoryWidget()
                 : Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 8),
                     child: ListView.builder(
                       itemCount: chatHistory.length,
                       itemBuilder: (context, index) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:BotPal/hive/chat_history.dart';
 import 'package:BotPal/provider/chat_provider.dart';
 import 'package:BotPal/utility/utilities.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ChatHistoryWidget extends StatelessWidget {
@@ -14,7 +15,11 @@ class ChatHistoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Format the date and time
+    final String formattedDateTime =
+        DateFormat('dd-MM-yyyy – kk:mm').format(chat.timestamp);
     return Card(
+      margin: const EdgeInsets.symmetric(vertical: 7),
       child: ListTile(
         contentPadding: const EdgeInsets.only(left: 10.0, right: 10.0),
         leading: const CircleAvatar(
@@ -23,11 +28,27 @@ class ChatHistoryWidget extends StatelessWidget {
         ),
         title: Text(
           chat.prompt,
+          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 17),
           maxLines: 1,
         ),
-        subtitle: Text(
-          chat.response,
-          maxLines: 2,
+        subtitle: Column(
+          children: [
+            Text(
+              chat.response,
+              style: const TextStyle(fontSize: 14),
+              maxLines: 2,
+            ),
+            const SizedBox(
+              height: 6,
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                formattedDateTime,
+                style: const TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+            ),
+          ],
         ),
         trailing: const Icon(Icons.arrow_forward_ios),
         onTap: () async {
