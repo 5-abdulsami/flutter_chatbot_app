@@ -86,6 +86,13 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List<ChatHistory>> getChatHistories() async {
+    final chatHistoryBox = Boxes.getChatHistory();
+    final chatHistories = chatHistoryBox.values.toList();
+    chatHistories.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+    return chatHistories;
+  }
+
   // load the messages from db
   Future<List<Message>> loadMessagesFromDB({required String chatId}) async {
     // open the box of this chatID
