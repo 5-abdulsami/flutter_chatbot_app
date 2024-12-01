@@ -49,7 +49,7 @@ class AssistantMessageWidget extends StatelessWidget {
                     data: message,
                     styleSheet: MarkdownStyleSheet(
                       p: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w400),
+                          fontSize: 15, fontWeight: FontWeight.w400),
                       h1: const TextStyle(
                           fontSize: 28, fontWeight: FontWeight.w900),
                       h2: const TextStyle(
