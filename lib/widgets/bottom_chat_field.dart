@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:BotPal/provider/chat_provider.dart';
 import 'package:BotPal/utility/utilities.dart';
@@ -20,13 +19,8 @@ class BottomChatField extends StatefulWidget {
 }
 
 class _BottomChatFieldState extends State<BottomChatField> {
-  // controller for the input field
   final TextEditingController textController = TextEditingController();
-
-  // focus node for the input field
   final FocusNode textFieldFocus = FocusNode();
-
-  // initialize image picker
   final ImagePicker _picker = ImagePicker();
 
   @override
@@ -55,7 +49,6 @@ class _BottomChatFieldState extends State<BottomChatField> {
     }
   }
 
-  // pick an image
   void pickGalleryImage() async {
     try {
       final pickedImages = await _picker.pickMultiImage(
@@ -104,7 +97,6 @@ class _BottomChatFieldState extends State<BottomChatField> {
               IconButton(
                 onPressed: () {
                   if (hasImages) {
-                    // show the delete dialog
                     showMyAnimatedDialog(
                         context: context,
                         title: 'Delete Images',
@@ -147,29 +139,39 @@ class _BottomChatFieldState extends State<BottomChatField> {
                       icon: const Icon(Icons.image),
                     ),
               Expanded(
-                child: TextField(
-                  focusNode: textFieldFocus,
-                  controller: textController,
-                  textInputAction: TextInputAction.send,
-                  onSubmitted: widget.chatProvider.isLoading
-                      ? null
-                      : (String value) {
-                          if (value.isNotEmpty) {
-                            // send the message
-                            sendChatMessage(
-                              message: textController.text,
-                              chatProvider: widget.chatProvider,
-                              isTextOnly: hasImages ? false : true,
-                            );
-                          }
-                        },
-                  decoration: InputDecoration.collapsed(
-                      hintText: 'Ask me anything...',
-                      hintStyle: GoogleFonts.poppins(),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(30),
-                      )),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxHeight: 200, // Prevent overflow by limiting height
+                  ),
+                  child: Scrollbar(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      reverse: true,
+                      child: TextField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        focusNode: textFieldFocus,
+                        controller: textController,
+                        textInputAction: TextInputAction.newline,
+                        onSubmitted: widget.chatProvider.isLoading
+                            ? null
+                            : (String value) {
+                                if (value.isNotEmpty) {
+                                  // send the message
+                                  sendChatMessage(
+                                    message: textController.text,
+                                    chatProvider: widget.chatProvider,
+                                    isTextOnly: hasImages ? false : true,
+                                  );
+                                }
+                              },
+                        decoration: InputDecoration.collapsed(
+                          hintText: 'Ask me anything...',
+                          hintStyle: GoogleFonts.poppins(),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
               GestureDetector(
@@ -177,24 +179,24 @@ class _BottomChatFieldState extends State<BottomChatField> {
                     ? null
                     : () {
                         if (textController.text.isNotEmpty) {
-                          // send the message
                           sendChatMessage(
                             message: textController.text,
                             chatProvider: widget.chatProvider,
-                            isTextOnly: hasImages ? false : true,
+                            isTextOnly: !hasImages,
                           );
                         }
                       },
                 child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.deepPurple,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    margin: const EdgeInsets.all(5.0),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(Icons.arrow_upward, color: Colors.white),
-                    )),
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurple,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  margin: const EdgeInsets.all(5.0),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Icon(Icons.arrow_upward, color: Colors.white),
+                  ),
+                ),
               )
             ],
           ),
